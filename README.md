@@ -1,5 +1,5 @@
 # IntrusionDetectionSystem
-An 'Intrusion Detection System' for smart surveillance in any fully restricted area using Image Processing.
+An <b>'Intrusion Detection System'<b> for smart surveillance in any fully restricted area using Image Processing.
 
 <b>Project Title:</b> An 'Intrusion Detection System' for smart surveillance in any fully restricted area using Image Processing.<br/>
 
