@@ -25,15 +25,15 @@ class Gaussian_Mixture : public FrameProcessor {
 	// used with all default parameters
 	BackgroundSubtractorMOG mog;
 public:
-    void process(Mat &frame,Mat &output)
-    {
+    	void process(Mat &frame,Mat &output)
+    	{
 		// update the background
 		// and return the foreground
-        mog(frame,output,0.01);
+        	mog(frame,output,0.01);
 
 		// Complement the image
-        threshold(output,output,128,255,cv::THRESH_BINARY_INV);
-    }
+        	threshold(output,output,128,255,cv::THRESH_BINARY_INV);
+    	}
 
 };
 #endif
