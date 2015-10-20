@@ -15,20 +15,20 @@ background scene and extract the foreground out of given frame.
 using namespace cv;
 class Running_Avg : public FrameProcessor {
 
-	Mat gray;			    // current gray-level image
-	Mat background;		    // accumulated background
-	Mat backImage;		    // background image
-	Mat foreground;		    // foreground image
-	double learningRate;    // learning rate in background accumulation
+	Mat gray;			// current gray-level image
+	Mat background;		    	// accumulated background
+	Mat backImage;		    	// background image
+	Mat foreground;		    	// foreground image
+	double learningRate;    	// learning rate in background accumulation
 	int Threshold;			// threshold for foreground extraction
 
   public:
 
-	  Running_Avg() : Threshold(10), learningRate(0.01) {}
+	Running_Avg() : Threshold(10), learningRate(0.01) {}
 
 	// Set the threshold used to declare a foreground
 	void setThreshold(int t) {
-
+		
 		Threshold = t;
 	}
 
@@ -41,23 +41,23 @@ class Running_Avg : public FrameProcessor {
 	// processing method
 	void process(Mat &frame,Mat &output) {
 
-	// convert to gray-level image
-	cvtColor(frame, gray, CV_BGR2GRAY);
-
-	// initialize background to 1st frame
-	if (background.empty())
-		gray.convertTo(background, CV_32F);
-
-	// convert background to 8U
+		// convert to gray-level image
+		cvtColor(frame, gray, CV_BGR2GRAY);
+	
+		// initialize background to 1st frame
+		if (background.empty())
+			gray.convertTo(background, CV_32F);
+	
+		// convert background to 8U
 		background.convertTo(backImage,CV_8U);
-
-	// compute difference between current image and background
+	
+		// compute difference between current image and background
 		absdiff(backImage,gray,foreground);
-
-	// apply threshold to foreground image
+	
+		// apply threshold to foreground image
 		threshold(foreground, output, Threshold, 255, cv::THRESH_BINARY_INV);
-
-	// accumulate background
+	
+		// accumulate background
 		accumulateWeighted(gray, background, learningRate, output);
 	}
 };
