@@ -30,11 +30,11 @@ class VideoProcessor
 {
 private:
 	// the OpenCV video capture object
-    VideoCapture Input;
+    	VideoCapture Input;
     
 	string Input_Window_Name;
-    string Output_Window_Name;
-    int Delay;
+    	string Output_Window_Name;
+    	int Delay;
 
 	// the callback function to be called 
 	// for the processing of each frame
@@ -42,52 +42,53 @@ private:
 
 	// the pointer to the class implementing 
 	// the FrameProcessor interface
-    FrameProcessor *frameProcessor;
+    	FrameProcessor *frameProcessor;
+
 public:
 
-    //Constructor
-    VideoProcessor():Delay(0)
-    {
-    }
+    	//Constructor
+    	VideoProcessor():Delay(0)
+    	{
+    	}
 
-    //Setter Function
-    bool Set_Input(string Input_Name)
-    {
-        return Input.open(Input_Name);
-    }
+    	//Setter Function
+    	bool Set_Input(string Input_Name)
+    	{
+        	return Input.open(Input_Name);
+    	}
 
-    void Set_Input_Window(string Window_Name)
-    {
-        Input_Window_Name=Window_Name;
-        namedWindow(Input_Window_Name);
-    }
+    	void Set_Input_Window(string Window_Name)
+    	{
+        	Input_Window_Name=Window_Name;
+        	namedWindow(Input_Window_Name);
+    	}
 
-    void Set_Output_Window(string Window_Name)
-    {
-        Output_Window_Name=Window_Name;
-        namedWindow(Output_Window_Name);
-    }
+    	void Set_Output_Window(string Window_Name)
+    	{
+        	Output_Window_Name=Window_Name;
+        	namedWindow(Output_Window_Name);
+    	}
 
-    void Set_Process(void (*frameProcessingCallback)(Mat&,Mat&))
-    {
-        frameProcessor= 0;
-        Process= frameProcessingCallback;
-    }
-    void Set_Process(FrameProcessor* frameProcessorPtr)
-    {
-        Process= 0;
-        frameProcessor= frameProcessorPtr;
-    }
+    	void Set_Process(void (*frameProcessingCallback)(Mat&,Mat&))
+    	{
+        	frameProcessor= 0;
+        	Process= frameProcessingCallback;
+    	}
+    	void Set_Process(FrameProcessor* frameProcessorPtr)
+    	{
+        	Process= 0;
+        	frameProcessor= frameProcessorPtr;
+    	}
 
 
-    // Run Functions;
-    void Run()
-    {
+    	// Run Functions;
+	void Run()
+	{
 		//current frame
-        Mat Frame;
+        	Mat Frame;
 
 		// output frame
-        Mat Output;
+        	Mat Output;
 
 		//input frame rate
 		double rate = Input.get(CV_CAP_PROP_FPS);
@@ -95,31 +96,30 @@ public:
 		//required delay in output
 		Delay = 1000 / rate;
 
-        bool stop(false);
+        	bool stop(false);
 
-        while(!stop)
-        {
-            if(!Input.read(Frame))
-                break;
+        	while(!stop)
+        	{
+            		if(!Input.read(Frame))
+                		break;
 
 			//display input image
-            imshow(Input_Window_Name,Frame);
+            		imshow(Input_Window_Name,Frame);
 
 			//applying the actual process on each frame
-            if (Process)
-                Process(Frame, Output);
-            else if (frameProcessor)
-                frameProcessor->process(Frame,Output);
+            		if (Process)
+                		Process(Frame, Output);
+            		else if (frameProcessor)
+                		frameProcessor->process(Frame,Output);
 
 			//display output image
-            imshow(Output_Window_Name,Output);
+            		imshow(Output_Window_Name,Output);
 
+            		if (waitKey(Delay) >= 0)
+				stop = true;
 
-            if (waitKey(Delay) >= 0)
-			stop = true;
-
-        }
-    }
+        	}
+    	}
 };
 
 #endif // VIDEO_PROCESSOR
