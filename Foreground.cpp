@@ -26,25 +26,25 @@ int main()
 	VideoProcessor Processor1;
 
 	// Creating instance of Running_Avg class
-    Running_Avg function1;
+    	Running_Avg function1;
 
 	//Set threshold value
-    function1.setThreshold(25);
+    	function1.setThreshold(25);
 	
 	//Open video file
-    Processor1.Set_Input("video_feed.mp4");
+    	Processor1.Set_Input("video_feed.mp4");
 
 	//Declare a window to display the input video 
-    Processor1.Set_Input_Window("Input Video");
+    	Processor1.Set_Input_Window("Input Video");
 
 	//Declare a window to display the output video
-    Processor1.Set_Output_Window("Extracted Foreground");
+    	Processor1.Set_Output_Window("Extracted Foreground");
 
 	//set frame processor
-    Processor1.Set_Process(&function1);
+    	Processor1.Set_Process(&function1);
 
 	//Start the process
-    Processor1.Run();
+    	Processor1.Run();
 
 	///////////////////////////////////////////////////////////////////
     
